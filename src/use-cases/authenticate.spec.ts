@@ -22,4 +22,16 @@ describe("authenticate use case", () => {
 
     expect(user.id).toBeDefined();
   });
+
+  it("should not be able to authenticate with wrong email", async () => {
+    const usersRepository = new InMemoryUsersRepository();
+    const sut = new AuthenticateUseCase(usersRepository);
+
+    await expect(
+      sut.execute({
+        email: "wrong@email.com",
+        password: "123456",
+      }),
+    ).rejects.toBeInstanceOf(InvalidCredentialsError);
+  });
 });
