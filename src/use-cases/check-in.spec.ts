@@ -2,23 +2,22 @@ import { expect, describe, it, beforeEach, vi, afterEach } from "vitest";
 import { InMemoryCheckInsRepository } from "@/repositories/in-memory/in-memory-check-ins-repository";
 import { CheckInUseCase } from "./check-in";
 import { InMemoryGymsRepository } from "@/repositories/in-memory/in-memory-gyms-repository";
-import { Decimal } from "@prisma/client/runtime/library";
 
 let checkInsRepository: InMemoryCheckInsRepository;
 let gymsRepository: InMemoryGymsRepository;
 let sut: CheckInUseCase;
 
 describe("check in use case", () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     checkInsRepository = new InMemoryCheckInsRepository();
     gymsRepository = new InMemoryGymsRepository();
     sut = new CheckInUseCase(checkInsRepository, gymsRepository);
 
-    gymsRepository.items.push({
+    await gymsRepository.create({
       id: "1",
       title: "Gym 1",
-      latitude: new Decimal(-24.0803549),
-      longitude: new Decimal(-46.5886484),
+      latitude: -24.0803549,
+      longitude: -46.5886484,
       phone: "+551199999999",
       description: null,
     });
@@ -84,11 +83,11 @@ describe("check in use case", () => {
   });
 
   it("should not be able to check in on distant gym", async () => {
-    gymsRepository.items.push({
+    await gymsRepository.create({
       id: "2",
       title: "Gym 2",
-      latitude: new Decimal(-23.8776068),
-      longitude: new Decimal(-46.186831),
+      latitude: -23.8776068,
+      longitude: -46.186831,
       phone: "+551199999999",
       description: null,
     });
