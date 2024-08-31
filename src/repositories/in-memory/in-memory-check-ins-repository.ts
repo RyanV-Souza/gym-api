@@ -4,7 +4,7 @@ import { randomUUID } from "node:crypto";
 import dayjs from "dayjs";
 
 export class InMemoryCheckInsRepository implements CheckInsRepository {
-  private items: CheckIn[] = [];
+  public items: CheckIn[] = [];
 
   async create(data: Prisma.CheckInUncheckedCreateInput) {
     const checkIn = {
@@ -47,5 +47,21 @@ export class InMemoryCheckInsRepository implements CheckInsRepository {
     const checkIns = this.items.filter((checkIn) => checkIn.user_id === userId);
 
     return checkIns.length;
+  }
+
+  async findById(id: string): Promise<CheckIn | null> {
+    const checkIn = this.items.find((checkIn) => checkIn.id === id);
+
+    return checkIn || null;
+  }
+
+  async save(checkIn: CheckIn): Promise<CheckIn> {
+    const checkIndex = this.items.findIndex((item) => item.id === checkIn.id);
+
+    if (checkIndex >= 0) {
+      this.items[checkIndex] = checkIn;
+    }
+
+    return checkIn;
   }
 }
