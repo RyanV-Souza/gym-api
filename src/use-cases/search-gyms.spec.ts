@@ -40,7 +40,7 @@ describe("search gyms use case", () => {
     expect(gyms).toEqual([expect.objectContaining({ title: "Gym 1" })]);
   });
 
-  it.skip("should be able to fetch paginated gym search", async () => {
+  it("should be able to fetch paginated gym search", async () => {
     for (let i = 1; i <= 22; i++) {
       await gymsRepository.create({
         title: "Gym " + i,
