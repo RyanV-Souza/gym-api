@@ -20,8 +20,6 @@ describe("create gym use case", () => {
       longitude: -46.66,
     });
 
-    console.log(gym);
-
     expect(gym.id).toBeDefined();
   });
 });
