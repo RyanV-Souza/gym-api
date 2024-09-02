@@ -43,7 +43,8 @@ describe("Check-in History (e2e)", () => {
 
     const response = await request(app.server)
       .get("/check-ins/history")
-      .set("Authorization", `Bearer ${token}`);
+      .set("Authorization", `Bearer ${token}`)
+      .send();
 
     expect(response.statusCode).toEqual(200);
     expect(response.body.checkIns).toHaveLength(2);
