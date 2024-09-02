@@ -5,8 +5,8 @@ import { FastifyInstance } from "fastify";
 import { verifyJwt } from "./middleware/verify-jwt";
 
 export async function appRoutes(app: FastifyInstance) {
-  app.post("/user", register);
-  app.post("/session", authenticate);
+  app.post("/users", register);
+  app.post("/sessions", authenticate);
 
   // Authenticated routes
   app.get("/me", { onRequest: [verifyJwt] }, profile);
